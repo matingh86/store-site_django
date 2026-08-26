@@ -1,0 +1,45 @@
+{% if item.subs.all %}
+    <!-- دسته‌بندی دارای زیرمجموعه -->
+    <details class="category-accordion">
+        <summary class="d-flex justify-content-between align-items-center text-dark py-1 pe-1" style="cursor: pointer; list-style: none;">
+            <!-- لینک نام دسته -->
+            <a href="{% url 'shop:product_list' %}?category={{ item.slug }}" class="text-decoration-none text-dark fw-semibold flex-grow-1">
+                {{ item.title|default:item.name }}
+            </a>
+            <!-- آیکون بازکننده آکاردئون -->
+            <i class="fas fa-chevron-down small text-muted accordion-arrow ms-2"></i>
+        </summary>
+        
+        <!-- زیرمجموعه‌ها -->
+        <ul class="list-unstyled pe-2 my-1 border-end border-2 me-2">
+            {% for child in item.subs.all %}
+                <li class="py-1">
+                    {% include "shop/sidebar_category_item.html" with item=child %}
+                </li>
+            {% endfor %}
+        </ul>
+    </details>
+{% else %}
+    <!-- دسته‌بندی بدون زیرمجموعه -->
+    <a href="{% url 'shop:product_list' %}?category={{ item.slug }}" class="text-decoration-none text-muted d-block py-1">
+        <i class="fas fa-angle-left me-1 small opacity-50"></i> {{ item.title|default:item.name }}
+    </a>
+{% endif %}
+
+<style>
+    /* مخفی کردن مثلث پیش‌فرض details */
+.category-accordion > summary::-webkit-details-marker,
+.category-accordion > summary::marker {
+    display: none;
+}
+
+/* چرخش فلش هنگام باز شدن آکاردئون */
+.category-accordion[open] > summary .accordion-arrow {
+    transform: rotate(180deg);
+    transition: transform 0.2s ease;
+}
+
+.accordion-arrow {
+    transition: transform 0.2s ease;
+}
+</style>

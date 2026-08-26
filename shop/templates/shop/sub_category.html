@@ -1,0 +1,19 @@
+{% for sub in children %}
+    {% if not sub.parent or children != categories %}
+        <li class="position-relative dropdown-submenu list-unstyled">
+            <a class="dropdown-item d-flex justify-content-between align-items-center py-2 px-3 {% if category and category.slug == sub.slug %}active fw-bold{% endif %}" 
+               href="{% url 'shop:product_list_by_category' sub.slug %}">
+                <span>{{ sub.name }}</span>
+                {% if sub.subs.all %}
+                    <i class="fas fa-chevron-left small ms-2 text-muted"></i>
+                {% endif %}
+            </a>
+            
+            {% if sub.subs.all %}
+                <ul class="dropdown-menu submenu shadow-sm border-0 rounded-3 p-0 m-0">
+                    {% include "shop/sub_category.html" with children=sub.subs.all %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endif %}
+{% endfor %}

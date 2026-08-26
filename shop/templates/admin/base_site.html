@@ -1,0 +1,309 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{{ title }} | مدیریت فروشگاه{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}" style="display: flex; align-items: center; gap: 10px; text-decoration: none; color: white;">
+        🛒 <span>پنل مدیریت اختصاصی</span>
+    </a>
+</h1>
+{% endblock %}
+
+{% block extrahead %}
+    {{ block.super }}
+    <!-- لود فونت فارسی وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" />
+    
+    <style>
+        /* =========================================================
+           ۱. تنظیمات پایه و پس‌زمینه (Light Blue Theme)
+           ========================================================= */
+        html, body {
+            min-height: 100vh !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            font-family: 'Vazirmatn', sans-serif !important;
+            direction: rtl !important;
+            text-align: right !important;
+        }
+
+        body {
+            background-color: #f0f9ff !important;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(56, 189, 248, 0.25) 0%, transparent 50%),
+                radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.18) 0%, transparent 50%),
+                radial-gradient(rgba(2, 132, 199, 0.18) 1.2px, transparent 1.2px) !important;
+            background-size: 100% 100%, 100% 100%, 22px 22px !important;
+            background-attachment: fixed !important;
+        }
+
+        input, select, textarea, button {
+            font-family: 'Vazirmatn', sans-serif !important;
+        }
+
+        /* =========================================================
+           ۲. مخفی‌سازی دقیق بسته cities_light (بدون آسیب به سایر مدل‌ها)
+           ========================================================= */
+        .app-cities_light,
+        #module_cities_light,
+        a[href*="/admin/cities_light/"] {
+            display: none !important;
+        }
+
+        /* =========================================================
+           ۳. کارت‌ها، جدول‌ها و اصلاح نمایش متون __str__
+           ========================================================= */
+        .login #container, .module, #changelist {
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(12px) !important;
+            border-radius: 14px !important;
+            border: 1px solid #bae6fd !important;
+            box-shadow: 0 10px 25px -5px rgba(2, 132, 199, 0.1) !important;
+            margin-bottom: 28px !important;
+            overflow: hidden !important;
+        }
+
+        .module table caption, .module h2 {
+            background: linear-gradient(135deg, #1e3a8a 0%, #013ced 100%) !important;
+            color: #ffffff !important;
+            padding: 14px 20px !important;
+            font-size: 15px !important;
+            font-weight: 700 !important;
+            text-align: right !important;
+            caption-side: top !important;
+            display: block !important;
+        }
+
+        .module table caption a {
+            color: #ffffff !important;
+            text-decoration: none !important;
+        }
+
+        .module table, #changelist table {
+            width: 100% !important;
+            border-collapse: collapse !important;
+            display: table !important;
+        }
+
+        .module table tr, #changelist table tbody tr {
+            border-bottom: 1px solid #e2e8f0 !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .module table tr:hover, #changelist table tbody tr:hover {
+            background-color: #f1f5f9 !important;
+        }
+
+        .module table th, .module table td,
+        #changelist table th, #changelist table td {
+            padding: 14px 20px !important;
+            vertical-align: middle !important;
+        }
+
+        /* اصلاح رنگ و نمایش کامل عناوین __str__ */
+        #changelist table tbody th a, 
+        #changelist table tbody td a,
+        #changelist table tbody th,
+        #changelist table tbody td,
+        .field-__str__ a,
+        .results td a,
+        .results th a,
+        .module table th a {
+            color: #0f172a !important; /* رنگ سورمه‌ای تیره و بسیار خوانا */
+            font-weight: 700 !important;
+            font-size: 14px !important;
+            text-decoration: none !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+
+        #changelist table tbody th a:hover, 
+        #changelist table tbody td a:hover,
+        .field-__str__ a:hover,
+        .module table th a:hover {
+            color: #2563eb !important;
+            text-decoration: underline !important;
+        }
+
+        /* =========================================================
+           ۴. استایل دکمه‌های هدر
+           ========================================================= */
+        #header {
+            background: #0f172a !important;
+            padding: 14px 24px !important;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+        }
+
+        .login #header {
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        #header a, 
+        #user-tools a, 
+        .login #header a,
+        header nav a {
+            background-color: #10b981 !important;
+            color: #ffffff !important;
+            padding: 8px 18px !important;
+            border-radius: 8px !important;
+            font-size: 13px !important;
+            font-weight: 700 !important;
+            text-decoration: none !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            box-shadow: 0 2px 5px rgba(16, 185, 129, 0.3) !important;
+            transition: all 0.2s ease-in-out !important;
+            border: none !important;
+            margin: 0 4px !important;
+        }
+
+        #header a:hover, 
+        #user-tools a:hover, 
+        .login #header a:hover,
+        header nav a:hover {
+            background-color: #059669 !important;
+            color: #ffffff !important;
+            transform: translateY(-2px) !important;
+            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4) !important;
+        }
+
+        /* =========================================================
+           ۵. استایل دکمه‌های فرم‌ها (Save, Add, Change, Delete, Continue)
+           ========================================================= */
+        /* 🟢 دکمه افزودن (Add) */
+        a.addlink, .addlink a, td a.addlink {
+            background-color: #10b981 !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.2) !important;
+            transition: all 0.2s ease !important;
+            margin-left: 6px !important;
+        }
+
+        a.addlink:hover, .addlink a:hover {
+            background-color: #059669 !important;
+            transform: translateY(-1px);
+        }
+
+        /* 🔵 دکمه ویرایش (Change) */
+        a.changelink, .changelink a, td a.changelink {
+            background-color: #3b82f6 !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2) !important;
+            transition: all 0.2s ease !important;
+            margin-left: 6px !important;
+        }
+
+        a.changelink:hover, .changelink a:hover {
+            background-color: #2563eb !important;
+            transform: translateY(-1px);
+        }
+
+        /* 🔴 دکمه حذف (Delete) */
+        a.deletelink, .deletelink a {
+            background-color: #ef4444 !important;
+            color: #ffffff !important;
+            padding: 6px 16px !important;
+            border-radius: 8px !important;
+            font-size: 12px !important;
+            font-weight: 600 !important;
+            text-decoration: none !important;
+            display: inline-block !important;
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2) !important;
+            transition: all 0.2s ease !important;
+        }
+
+        a.deletelink:hover, .deletelink a:hover {
+            background-color: #dc2626 !important;
+            transform: translateY(-1px);
+        }
+
+        /* 🔷 دکمه ذخیره (Save) - آبی تیره */
+        .submit-row input[type="submit"].default,
+        input[type="submit"].default[name="_save"],
+        .login .submit-row input[type="submit"] {
+            background-color: #1e40af !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 8px 18px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 4px rgba(30, 64, 175, 0.3) !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .submit-row input[type="submit"].default:hover,
+        input[type="submit"].default[name="_save"]:hover,
+        .login .submit-row input[type="submit"]:hover {
+            background-color: #1e3a8a !important;
+            transform: translateY(-1px);
+        }
+
+        /* 🟢 دکمه Save and Add Another - کله غازی */
+        .submit-row input[name="_addanother"] {
+            background-color: #0d9488 !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 8px 16px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 4px rgba(13, 148, 136, 0.3) !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .submit-row input[name="_addanother"]:hover {
+            background-color: #0f766e !important;
+            transform: translateY(-1px);
+        }
+
+        /* 🟣 دکمه Save and Continue - نیلی */
+        .submit-row input[name="_continue"] {
+            background-color: #4f46e5 !important;
+            color: #ffffff !important;
+            border: none !important;
+            border-radius: 8px !important;
+            padding: 8px 16px !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 4px rgba(79, 70, 229, 0.3) !important;
+            transition: all 0.2s ease !important;
+        }
+
+        .submit-row input[name="_continue"]:hover {
+            background-color: #4338ca !important;
+            transform: translateY(-1px);
+        }
+
+        /* =========================================================
+           ۶. نوار مسیر (Breadcrumbs)
+           ========================================================= */
+        div.breadcrumbs {
+            background: #e2e8f0 !important;
+            border-bottom: 1px solid #cbd5e1 !important;
+            padding: 12px 24px !important;
+            font-size: 13px !important;
+            color: #475569 !important;
+        }
+
+        div.breadcrumbs a {
+            color: #2563eb !important;
+            text-decoration: none !important;
+            font-weight: 600 !important;
+        }
+    </style>
+{% endblock %}

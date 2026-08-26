@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سوالات متداول | مرکز پاسخگویی</title>
+
+    <!-- Bootstrap 5 RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- فونت فارسی وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .faq-header {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: #fff;
+            padding: 70px 0 90px 0;
+            border-radius: 0 0 35px 35px;
+        }
+
+        .faq-container-wrapper {
+            margin-top: -50px;
+        }
+
+        .faq-card {
+            background: #ffffff;
+            border-radius: 24px;
+            border: none;
+        }
+
+        .faq-search-box {
+            position: relative;
+            max-width: 550px;
+            margin: 0 auto 35px auto;
+        }
+
+        .faq-search-box input {
+            border-radius: 50px;
+            padding: 14px 45px 14px 20px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+
+        .faq-search-box input:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 15px rgba(13, 110, 253, 0.15);
+        }
+
+        .faq-search-box i {
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .faq-item {
+            border: 1px solid #f0f2f5 !important;
+            border-radius: 16px !important;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .faq-item:hover {
+            border-color: #d0e2ff !important;
+            transform: translateY(-2px);
+        }
+
+        .faq-button {
+            font-weight: 700;
+            font-size: 1.05rem;
+            color: #2b303a;
+            background-color: #fff !important;
+            padding: 18px 24px;
+            box-shadow: none !important;
+        }
+
+        .faq-button:not(.collapsed) {
+            color: #0d6efd;
+            background-color: #f8faff !important;
+        }
+
+        .faq-button::after {
+            margin-right: auto;
+            margin-left: 0;
+        }
+
+        .faq-body {
+            background-color: #f8faff;
+            color: #555e68;
+            line-height: 1.8;
+            font-size: 0.95rem;
+            padding: 0 24px 20px 24px;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- هدر بالای صفحه -->
+    <header class="faq-header text-center">
+        <div class="container">
+            <span class="badge bg-white text-primary px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm">راهنمای کاربران</span>
+            <h1 class="fw-extrabold display-5">سوالات متداول</h1>
+            <p class="lead opacity-75 mb-0 fs-6">پاسخ پرسش‌های رایج خود را به راحتی پیدا کنید.</p>
+        </div>
+    </header>
+
+    <!-- محتوای اصلی -->
+    <main class="container mb-5 flex-grow-1 faq-container-wrapper">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="faq-card shadow-sm p-4 p-md-5">
+                    
+                    <!-- باکس جستجوی زنده -->
+                    <div class="faq-search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="faqSearchInput" class="form-control" placeholder="جستجو در سوالات متداول...">
+                    </div>
+
+                    <!-- آکاردئون سوالات -->
+                    <div class="accordion" id="faqAccordion">
+
+                        <div class="accordion-item faq-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button faq-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                    <i class="fas fa-truck text-primary me-2"></i> روش‌ها و هزینه ارسال به چه صورت است؟
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body faq-body">
+                                    ارسال سفارش‌ها در تهران از طریق پیک اختصاصی و برای سایر شهرها از طریق پست پیشتاز انجام می‌شود. هزینه ارسال بر اساس وزن و مقصد محاسبه می‌شود.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item faq-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                    <i class="fas fa-undo text-danger me-2"></i> شرایط بازگشت کالا تا چند روز است؟
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body faq-body">
+                                    در صورت وجود هرگونه آسیب‌دیدگی، مغایرت یا نقص فنی، تا ۷ روز کاری مهلت دارید موضوع را به پشتیبانی اطلاع داده و محصول را بازگردانید.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item faq-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                    <i class="fas fa-wallet text-success me-2"></i> چه روش‌های پرداختی فعال هستند؟
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body faq-body">
+                                    شما می‌توانید هزینه سفارش خود را به‌صورت آنلاین از طریق تمامی کارت‌های عضو شتاب پرداخت کنید.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item faq-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button faq-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                    <i class="fas fa-clock text-warning me-2"></i> چقدر طول می‌کشد تا پیام من در تیکت بررسی شود؟
+                                </button>
+                            </h2>
+                            <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body faq-body">
+                                    تیم پشتیبانی ما همه‌روزه از ساعت ۹:۰۰ الی ۱۸:۰۰ پاسخگوی تیکت‌ها است. میانگین زمان پاسخگویی زیر ۲ ساعت کاری می‌باشد.
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- عدم یافتن نتیجه -->
+                    <div id="noFaqFound" class="text-center text-muted py-4 d-none">
+                        <i class="fas fa-search-minus fa-2x mb-2 text-secondary"></i>
+                        <p class="mb-0">هیچ سوالی مرتبط با عبارت درخواستی شما یافت نشد.</p>
+                    </div>
+
+                    <!-- پیام ارتباط با پشتیبانی -->
+                    <div class="text-center mt-5 pt-3 border-top">
+                        <p class="text-muted small mb-2">پاسخ سوال خود را پیدا نکردید؟</p>
+                        <a href="{% url 'shop:call_us' %}" class="btn btn-outline-primary btn-sm rounded-pill px-4 fw-bold">
+                            <i class="fas fa-headset me-1"></i> ارسال تیکت پشتیبانی
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-white border-top pt-5 pb-3 mt-auto">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-4">
+                    <h5 class="fw-bold text-primary mb-3">فروشگاه آنلاین</h5>
+                    <p class="text-muted small">ما در این فروشگاه تلاش می‌کنیم بهترین محصولات را با مناسب‌ترین قیمت و ضمانت اصالت کالا به دست شما برسانیم.</p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="fw-bold mb-3">دسترسی سریع</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{% url 'shop:about_us' %}" class="text-decoration-none text-muted">درباره ما</a></li>
+                        <li class="mb-2"><a href="{%url 'shop:call_us'%}" class="text-decoration-none text-muted">تماس با ما</a></li>
+                        <li class="mb-2"><a href="{% url 'shop:faq' %}" class="text-decoration-none text-muted">سوالات متداول</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-12 col-md-4">
+                    <h6 class="fw-bold mb-3">ارتباط با ما</h6>
+                    <p class="text-muted small mb-2"><i class="fas fa-phone me-2"></i> ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                    <p class="text-muted small mb-3"><i class="fas fa-envelope me-2"></i> matingh892@gmail.com</p>
+                    <div class="d-flex gap-2">
+                        <a href=""https://instagram.com/mg_shp"" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/mag_shp" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center text-muted small mb-0">تمامی حقوق برای این فروشگاه محفوظ است.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('faqSearchInput').addEventListener('keyup', function () {
+            const filter = this.value.toLowerCase().trim();
+            const faqItems = document.querySelectorAll('#faqAccordion .faq-item');
+            let hasResult = false;
+
+            faqItems.forEach(item => {
+                const text = item.textContent.toLowerCase();
+                if (text.includes(filter)) {
+                    item.style.display = '';
+                    hasResult = true;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            const noFoundDiv = document.getElementById('noFaqFound');
+            if (hasResult) {
+                noFoundDiv.classList.add('d-none');
+            } else {
+                noFoundDiv.classList.remove('d-none');
+            }
+        });
+    </script>
+</body>
+</html>

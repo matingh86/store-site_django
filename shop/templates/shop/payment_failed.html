@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطا در پرداخت</title>
+    <!-- Bootstrap RTL CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .failed-card {
+            border: none;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+        }
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background-color: #f8d7da;
+            color: #842029;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: -40px auto 1rem auto;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center min-vh-100 py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card failed-card text-center p-4">
+                    <!-- آیکون خطا -->
+                    <div class="icon-circle">
+                        <i class="bi bi-x-circle-fill fs-1"></i>
+                    </div>
+
+                    <h3 class="fw-bold text-danger mb-2">پرداخت انجام نشد</h3>
+                    
+                    <!-- پیام خطای ارسالی از ویو -->
+                    <div class="alert alert-danger my-3 py-2" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-1"></i>
+                        {{ error|default:"تراکنش ناموفق بود یا توسط کاربر لغو شد." }}
+                    </div>
+
+                    <p class="text-muted small mb-4">
+                        در صورت کسر وجه از حساب شما، مبلغ طی ۷۲ ساعت کاری از طرف بانک به حساب شما بازگردانده می‌شود.
+                    </p>
+
+                    <!-- دکمه‌های اقدام -->
+                    <div class="d-grid gap-2">
+                        {% if order %}
+                        <a href="{% url 'shop:payment_process' order.id %}" class="btn btn-danger btn-lg">
+                            <i class="bi bi-arrow-counterclockwise me-1"></i> تلاش مجدد برای پرداخت
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'shop:product_list' %}" class="btn btn-outline-secondary">
+                            بازگشت به صفحه اصلی
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

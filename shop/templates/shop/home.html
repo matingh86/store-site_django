@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+ {% load static %}
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فروشگاه آنلاین | صفحه اصلی</title>
+    <!-- Bootstrap 5 RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .hero-banner {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: white;
+            padding: 80px 0;
+            border-radius: 0 0 2rem 2rem;
+        }
+        .card-product {
+            border: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .product-img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .category-card {
+            border: none;
+            background-color: #ffffff;
+            transition: all 0.2s;
+        }
+        .category-card:hover {
+            background-color: #0d6efd;
+            color: white !important;
+        }
+        .category-card:hover i {
+            color: white !important;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- ۱. نوار بالای سایت و ناوبری (Header & Navbar) -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold text-primary fs-3" href="{% url 'shop:home' %}">فروشگاه من</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <!-- فرم جستجو -->
+                <form class="d-flex mx-auto my-2 my-lg-0 w-50" action="{% url 'shop:search'%}" method="GET">
+                    <div class="input-group">
+                        <input class="form-control border-end-0 rounded-start-pill" type="search" name="q" placeholder="جستجوی محصول..." aria-label="Search">
+                        <button class="btn btn-outline-secondary border-start-0 rounded-end-pill bg-white" type="submit">
+                            <i class="fas fa-search text-muted"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="d-flex align-items-center gap-3">
+    {% if user.is_authenticated %}
+        <!-- منوی پروفایل کاربر لاگین شده -->
+        <div class="dropdown">
+            <button class="btn btn-outline-secondary rounded-pill px-3 dropdown-toggle d-flex align-items-center gap-2" type="button" id="userMenu" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-user-circle fa-lg text-primary"></i>
+                <span class="fw-bold small">{{ user.phone }}</span>
+            </button>
+            
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm border-0 rounded-3 mt-2" aria-labelledby="userMenu">
+                <!-- گزینه پروفایل -->
+                <li>
+                    <a class="dropdown-item py-2" href="{% url 'shop:profile' %}">
+                        <i class="fas fa-id-card text-muted me-2"></i> پروفایل من
+                    </a>
+                </li>
+
+                <!-- ورود به پنل مدیریت (فقط برای ادمین‌ها) -->
+                {% if user.is_staff %}
+                <li>
+                    <a class="dropdown-item py-2 text-success fw-bold" href="{% url 'admin:index' %}" target="_blank">
+                        <i class="fas fa-user-shield text-success me-2"></i> پنل مدیریت سایت
+                    </a>
+                </li>
+                {% endif %}
+
+                <li><hr class="dropdown-divider"></li>
+
+                <!-- فرم خروج -->
+                <li class="px-3 py-1">
+                    <form action="{% url 'shop:logout' %}" method="post" class="m-0 p-0">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link text-danger p-0 m-0 text-decoration-none border-0 fw-bold">
+                            <i class="fas fa-sign-out-alt me-2"></i> خروج از حساب
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    {% else %}
+        <!-- دکمه ورود / ثبت‌نام برای کاربر مهمان -->
+        <a href="{% url 'shop:login' %}" class="btn btn-outline-primary rounded-pill px-4 btn-sm fw-bold">
+            <i class="fas fa-sign-in-alt me-1"></i> ورود / ثبت‌نام
+        </a>
+    {% endif %}
+
+    <!-- دکمه سبد خرید (نمایش برای همه کاربران) -->
+    <a href="{% url 'shop:cart_detail' %}" class="btn btn-primary rounded-circle position-relative p-2 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+            {{ cart|length }}
+        </span>
+    </a>
+</div>
+    </nav>
+
+    <!-- ۲. بنر اصلی (Hero Banner) -->
+    <section class="hero-banner text-center mb-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">تخفیف‌های ویژه فصل را از دست ندهید!</h1>
+            <p class="lead mb-4">بهترین محصولات با بالاترین کیفیت و سریع‌ترین ارسال در خدمت شماست.</p>
+            <a href="{% url 'shop:product_list'%}" class="btn btn-light btn-lg rounded-pill px-5 text-primary fw-bold">مشاهده محصولات</a>
+        </div>
+    </section>
+
+   <!-- ۳. دسته‌بندی‌ها (Categories) -->
+   <section class="container mb-5">
+    <h3 class="fw-bold mb-4 border-start border-primary border-4 ps-2">دسته‌بندی‌های محبوب</h3>
+    
+    <div class="row g-3">
+        {% for cat in categories %}
+            {% if not cat.parent %}
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="dropdown">
+                        <!-- گروه دکمه اصلی و بازکننده درواپ‌داون -->
+                        <div class="btn-group w-100 shadow-sm">
+                            <!-- لینک ورود به صفحه دسته‌بندی اصلی -->
+                            <a href="{% url 'shop:product_list' %}?category={{ cat.slug }}" 
+                               class="btn btn-outline-primary py-3 rounded-start-4 fw-bold text-start flex-grow-1">
+                                <i class="fas fa-layer-group me-2"></i>{{ cat.name }}
+                            </a>
+
+                            <!-- دکمه فلش برای باز کردن زیرمجموعه‌ها (در صورت وجود) -->
+                            {% if cat.subs.all %}
+                                <button type="button" 
+                                        class="btn btn-outline-primary dropdown-toggle dropdown-toggle-split rounded-end-4 px-3" 
+                                        data-bs-toggle="dropdown" 
+                                        aria-expanded="false">
+                                    <span class="visually-hidden">نمایش زیرمجموعه‌ها</span>
+                                </button>
+                                
+                                <ul class="dropdown-menu w-100 shadow-sm border-0 rounded-3 mt-1">
+                                    {% include "shop/sub_category.html" with children=cat.subs.all %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</section>
+    <!-- ۴. لیست محصولات ویژه (Featured Products) -->
+    <section class="container mb-5" id="products">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-bold border-start border-primary border-4 ps-2 mb-0">جدیدترین محصولات</h3>
+            <a href="{% url 'shop:product_list'%}" class="text-primary text-decoration-none fw-bold">مشاهده همه <i class="fas fa-arrow-left ms-1"></i></a>
+        </div>
+
+        <div class="row g-4">
+            {% for product in product %}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="card card-product h-100 rounded-4 shadow-sm overflow-hidden">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="card-img-top product-img" alt="{{ product.title }}">
+                        {% else %}
+                            <img src="{% static "images/images.png" %}" class="card-img-top product-img" alt="تصویر موجود نیست">
+                        {% endif %}
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fs-6 fw-bold">
+                                <a href="{{ product.get_absolute_url }}" class="text-decoration-none text-dark">
+                                    {{ product.title }}
+                                </a>
+                            </h5>
+                            {% if product.description %}
+                                <p class="card-text text-muted small flex-grow-1">
+                                    {{ product.description|truncatewords:8 }}
+                                </p>
+                            {% endif %}
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+    <span class="fw-bold text-success fs-5">{{ product.price }} <small class="fs-6">تومان</small></span>
+    <form action="{% url 'shop:cart_add' product.id %}" method="post" class="m-0">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-outline-primary btn-sm rounded-circle" title="افزودن به سبد خرید">
+            <i class="fas fa-plus"></i>
+        </button>
+    </form>
+</div>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center py-4">
+                    <p class="text-muted fs-5">هنوز محصولی ثبت نشده است.</p>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- ۵. فوتر (Footer) -->
+    <footer class="bg-white border-top pt-5 pb-3 mt-auto">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-4">
+                    <h5 class="fw-bold text-primary mb-3">فروشگاه آنلاین</h5>
+                    <p class="text-muted small">ما در این فروشگاه تلاش می‌کنیم بهترین محصولات را با مناسب‌ترین قیمت و ضمانت اصالت کالا به دست شما برسانیم.</p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="fw-bold mb-3">دسترسی سریع</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{% url 'shop:about_us' %}" class="text-decoration-none text-muted">درباره ما</a></li>
+                        <li class="mb-2"><a href="{%url 'shop:call_us'%}" class="text-decoration-none text-muted">تماس با ما</a></li>
+                        <li class="mb-2"><a href="{% url 'shop:faq' %}" class="text-decoration-none text-muted">سوالات متداول</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-12 col-md-4">
+                    <h6 class="fw-bold mb-3">ارتباط با ما</h6>
+                    <p class="text-muted small mb-2"><i class="fas fa-phone me-2"></i> ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                    <p class="text-muted small mb-3"><i class="fas fa-envelope me-2"></i> matingh892@gmail.com</p>
+                    <div class="d-flex gap-2">
+                        <a href=""https://instagram.com/mg_shp"" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/mag_shp" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center text-muted small mb-0">تمامی حقوق برای این فروشگاه محفوظ است.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

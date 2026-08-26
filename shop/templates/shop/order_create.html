@@ -1,0 +1,183 @@
+{% load static %}
+{% load humanize %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تکمیل و ثبت سفارش</title>
+    
+    <!-- Bootstrap 5 RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+        .custom-submit-btn {
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .custom-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(25, 135, 84, 0.35) !important;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container my-5">
+    <!-- بازگشت به سبد خرید -->
+    <div class="mb-4">
+        <a href="{% url 'shop:cart_detail' %}" class="btn btn-outline-secondary btn-sm shadow-sm">
+            <i class="bi bi-arrow-right me-1"></i> بازگشت به سبد خرید
+        </a>
+    </div>
+
+    <!-- عنوان صفحه -->
+    <div class="row mb-4">
+        <div class="col-12 text-center">
+            <h3 class="fw-bold text-primary">
+                <i class="bi bi-bag-check-fill me-2"></i>تکمیل مشخصات و ثبت سفارش
+            </h3>
+            <p class="text-muted fs-6">لطفاً اطلاعات ارسال را با دقت وارد کنید و پیش‌فاکتور خود را بررسی نمایید.</p>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- ستون سمت راست: فرم اطلاعات خریدار -->
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0 rounded-3">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="card-title mb-0 fs-6 fw-bold">
+                        <i class="bi bi-person-lines-fill me-2"></i>مشخصات تحویل‌گیرنده
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" action="{% url 'shop:order_create' %}" id="order-form">
+                        {% csrf_token %}
+
+                        <!-- نمایش خطاهای کلی فرم -->
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger mb-4">
+                                {% for error in form.non_field_errors %}
+                                    <p class="mb-0">{{ error }}</p>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <div class="row g-3">
+                          
+
+                            <!-- نام خانوادگی -->
+                            
+
+                            <!-- ایمیل -->
+                            <div class="col-md-6">
+                                <label for="{{ form.email.id_for_label }}" class="form-label fw-semibold">ایمیل <span class="text-danger">*</span></label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                    <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- شهر -->
+                            <div class="col-md-6">
+                                <label for="{{ form.city.id_for_label }}" class="form-label fw-semibold">شهر <span class="text-danger">*</span></label>
+                                {{ form.city }}
+                                {% if form.city.errors %}
+                                    <div class="text-danger small mt-1">{{ form.city.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- آدرس پستی -->
+                            <div class="col-12">
+                                <label for="{{ form.address.id_for_label }}" class="form-label fw-semibold">آدرس دقیق <span class="text-danger">*</span></label>
+                                {{ form.address }}
+                                {% if form.address.errors %}
+                                    <div class="text-danger small mt-1">{{ form.address.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- کد پستی -->
+                            <div class="col-md-6">
+                                <label for="{{ form.postal_code.id_for_label }}" class="form-label fw-semibold">کد پستی <span class="text-danger">*</span></label>
+                                {{ form.postal_code }}
+                                {% if form.postal_code.errors %}
+                                    <div class="text-danger small mt-1">{{ form.postal_code.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- دکمه نهایی‌سازی سفارش -->
+                        <div class="mt-4 pt-3 border-top" >
+                            <button type="submit" class="btn btn-success btn-lg w-100 fw-bold py-3 shadow-sm custom-submit-btn">
+                                <i class="bi bi-credit-card-fill me-2"></i>ثبت نهایی سفارش و پرداخت
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ستون سمت چپ: خلاصه اقلام سبد خرید -->
+        <div class="col-lg-5">
+            <div class="card shadow-sm border-0 rounded-3 position-sticky" style="top: 20px;">
+                <div class="card-header bg-dark text-white py-3">
+                    <h5 class="card-title mb-0 fs-6 fw-bold">
+                        <i class="bi bi-cart-check me-2"></i>خلاصه سبد خرید
+                    </h5>
+                </div>
+                <div class="card-body p-0">
+                    <!-- لیست اقلام -->
+                    <ul class="list-group list-group-flush">
+                        {% for item in cart %}
+                            <li class="list-group-item p-3 d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center">
+                                    {% if item.product.image %}
+                                        <img src="{{ item.product.image.url }}" alt="{{ item.product.title }}" class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                    {% else %}
+                                        <img src="{% static 'images/images.png' %}" alt="تصویر موجود نیست" class="rounded me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                                    {% endif %}
+                                    <div>
+                                        <h6 class="mb-1 text-truncate" style="max-width: 160px;">{{ item.product.title }}</h6>
+                                        <small class="text-muted">تعداد: {{ item.quantity }} × {{ item.price }} میلیون تومان</small>
+                                    </div>
+                                </div>
+                                <span class="fw-bold text-dark fs-6">{{ item.total_price|intcomma }} میلیون تومان</span>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    <!-- محاسبات مالی -->
+                    <div class="p-3 bg-light border-top">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted">مجموع اقلام:</span>
+                            <span class="fw-semibold">{{ cart.total_price|intcomma }} میلیون تومان</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted">مقدار تخفیف</span>
+                            <span class="fw-semibold">{{ cart.get_discount|intcomma }} میلیون تومان</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-muted">هزینه ارسال:</span>
+                            <span class="text-success fw-semibold">رایگان</span>
+                        </div>
+                        <hr class="my-2">
+                        <div class="d-flex justify-content-between align-items-center fs-5 fw-bold text-primary">
+                            <span>مبلغ قابل پرداخت:</span>
+                            <span>{{ cart.get_total_price_after_discount|intcomma }} میلیون تومان</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

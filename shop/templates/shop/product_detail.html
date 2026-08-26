@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+{% load humanize %}
+{% load static %}
+
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.title }} | فروشگاه آنلاین</title>
+    <!-- Bootstrap 5 RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-color: #f8fafc;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: #334155;
+        }
+
+        .product-main-img {
+            max-height: 420px;
+            object-fit: contain;
+            border-radius: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .product-main-img:hover {
+            transform: scale(1.02);
+        }
+
+        .card-product {
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .card-product:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08) !important;
+        }
+
+        .related-img {
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* کنترل سفارشی افزایش/کاهش تعداد */
+        .quantity-control {
+            display: inline-flex;
+            align-items: center;
+            background-color: #f1f5f9;
+            border-radius: 50rem;
+            padding: 4px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn-quantity {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: none;
+            background: #ffffff;
+            color: #334155;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .btn-quantity:hover:not(:disabled) {
+            background-color: var(--primary-color);
+            color: #ffffff;
+        }
+
+        .btn-quantity:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .input-quantity {
+            width: 50px;
+            border: none;
+            background: transparent;
+            text-align: center;
+            font-weight: 700;
+            color: #1e293b;
+            font-size: 1rem;
+        }
+
+        .input-quantity:focus {
+            outline: none;
+        }
+
+        /* حذف فلش‌های پیش‌فرض input number */
+        .input-quantity::-webkit-inner-spin-button,
+        .input-quantity::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .input-quantity {
+            -moz-appearance: textfield;
+        }
+
+        .btn-cart {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+            border: none;
+            box-shadow: 0 8px 15px rgba(79, 70, 229, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .btn-cart:hover {
+            box-shadow: 0 12px 20px rgba(79, 70, 229, 0.35);
+            transform: translateY(-1px);
+        }
+    </style>
+</head>
+<body class="py-4">
+
+    <div class="container">
+        
+        <!-- ۱. نوار مسیر (Breadcrumb) -->
+        <nav aria-label="breadcrumb" class="mb-4">
+            <ol class="breadcrumb bg-white p-3 rounded-4 shadow-sm border-0">
+                <li class="breadcrumb-item"><a href="{% url 'shop:home' %}" class="text-decoration-none text-secondary">خانه</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'shop:product_list' %}" class="text-decoration-none text-secondary">محصولات</a></li>
+                {% if product.category %}
+                    <li class="breadcrumb-item"><a href="{{ product.category.get_absolute_url }}" class="text-decoration-none text-secondary">{{ product.category.name }}</a></li>
+                {% endif %}
+                <li class="breadcrumb-item active text-primary fw-bold" aria-current="page">{{ product.title }}</li>
+            </ol>
+        </nav>
+
+        <!-- ۲. کارت اصلی جزئیات محصول -->
+        <div class="card border-0 rounded-4 shadow-sm p-3 p-md-4 mb-5 bg-white">
+            <div class="row g-4 align-items-center">
+                
+                <!-- تصویر محصول -->
+                <div class="col-12 col-md-5 text-center">
+                    <div class="p-3 bg-light rounded-4 d-flex align-items-center justify-content-center" style="min-height: 350px;">
+                        {% if product.image %}
+                            <img src="{{ product.image.url }}" class="img-fluid product-main-img" alt="{{ product.title }}">
+                        {% else %}
+                            <img src="{% static "images/images.png" %}" class="img-fluid product-main-img" alt="تصویر موجود نیست">
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- اطلاعات محصول -->
+                <div class="col-12 col-md-7">
+                    <div class="ps-md-3">
+                        
+                        <!-- دسته‌بندی -->
+                        {% if product.category %}
+                            <span class="badge bg-primary-subtle text-primary mb-2 px-3 py-2 rounded-pill fs-7 fw-semibold">
+                                <i class="fas fa-tag me-1"></i> {{ product.category.name }}
+                            </span>
+                        {% endif %}
+
+                        <!-- عنوان محصول -->
+                        <h1 class="fw-bold h3 mb-3 text-dark">{{ product.title }}</h1>
+                        
+                        <!-- توضیحات کوتاه -->
+                        {% if product.description %}
+                            <p class="text-secondary mb-4 lead fs-6 lh-base">
+                                {{ product.description|truncatewords:25 }}
+                            </p>
+                        {% endif %}
+
+                        <hr class="my-4 text-muted opacity-25">
+
+                        <!-- قیمت -->
+                        <div class="mb-4">
+                            <span class="text-muted small d-block mb-1">قیمت محصول:</span>
+                            {% if product.discount_price %}
+                                <span class="text-decoration-line-through text-muted me-2 fs-6">{{ product.price|intcomma }}</span>
+                                <span class="fw-bold text-success fs-3">{{ product.discount_price|intcomma }} <small class="fs-6 text-dark fw-normal">میلیون تومان</small></span>
+                            {% else %}
+                                <span class="fw-bold text-success fs-3">{{ product.price|intcomma }} <small class="fs-6 text-dark fw-normal">میلیون تومان</small></span>
+                            {% endif %}
+                        </div>
+                 <!-- بررسی موجود بودن محصول -->
+                        {% if product.quantity|add:0 > 0 %}
+    <!-- فرم افزودن به سبد خرید -->
+    <form action="{% url 'shop:cart_add' product.id %}" method="POST" class="row g-3 align-items-center">
+        {% csrf_token %}
+        
+        <div class="col-auto">
+            <div class="quantity-control">
+                <button type="button" class="btn-quantity" id="btn-increase">
+                    <i class="fas fa-plus"></i>
+                </button>
+                <input type="number" id="quantity" name="quantity" class="input-quantity" value="1" min="1" max="{{ product.quantity }}">
+                <button type="button" class="btn-quantity" id="btn-decrease">
+                    <i class="fas fa-minus"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="col-12 col-sm-auto flex-grow-1">
+            <button type="submit" class="btn btn-primary btn-cart rounded-pill px-4 py-25 w-100 fs-6 fw-bold text-white">
+                <i class="fas fa-cart-plus me-2"></i> افزودن به سبد خرید
+            </button>
+        </div>
+    </form>
+{% else %}
+    <!-- نمایش پیام عدم موجودی -->
+    <div class="alert alert-danger bg-danger-subtle text-danger border-0 d-flex align-items-center rounded-4 py-3 px-4 mb-0" role="alert">
+        <i class="fas fa-exclamation-circle fa-lg me-3"></i>
+        <div>
+            <strong class="d-block fs-6 mb-1">این محصول در حال حاضر موجود نیست</strong>
+            <small class="text-danger-emphasis">امکان افزودن این کالا به سبد خرید وجود ندارد.</small>
+        </div>
+    </div>
+{% endif %}
+
+        <!-- ۳. تب‌های توضیحات کامل -->
+        <div class="card border-0 rounded-4 shadow-sm p-4 mb-5 bg-white">
+            <ul class="nav nav-tabs border-bottom mb-3" id="productTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active fw-bold text-primary border-0 border-bottom border-primary border-3 pb-2" id="desc-tab" data-bs-toggle="tab" data-bs-target="#desc" type="button" role="tab">
+                        <i class="fas fa-align-right me-1"></i> توضیحات تکمیلی
+                    </button>
+                </li>
+            </ul>
+            <div class="tab-content p-2" id="productTabContent">
+                <div class="tab-pane fade show active lh-lg text-secondary" id="desc" role="tabpanel">
+                    {% if product.description %}
+                        {{ product.description|linebreaks }}
+                    {% else %}
+                        <p class="text-muted m-0">توضیحات تکمیلی برای این محصول ثبت نشده است.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- ۴. محصولات مرتبط -->
+        {% if related_products %}
+            <div class="mb-5">
+                <h4 class="fw-bold mb-4 border-start border-primary border-4 ps-2 text-dark">محصولات مرتبط</h4>
+                <div class="row g-3">
+                    {% for item in related_products %}
+                        <div class="col-12 col-sm-6 col-md-3">
+                            <div class="card card-product h-100 bg-white rounded-4 shadow-sm overflow-hidden">
+                                {% if item.image %}
+                                    <img src="{{ item.image.url }}" class="card-img-top related-img" alt="{{ item.title }}">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/300x200?text=No+Image" class="card-img-top related-img" alt="تصویر موجود نیست">
+                                {% endif %}
+                                <div class="card-body d-flex flex-column p-3">
+                                    <h6 class="card-title fw-bold fs-6 mb-2">
+                                        <a href="{{ item.get_absolute_url }}" class="text-decoration-none text-dark">
+                                            {{ item.title }}
+                                        </a>
+                                    </h6>
+                                    <div class="mt-auto pt-2 border-top d-flex justify-content-between align-items-center">
+                                        <span class="fw-bold text-success small">{{ item.price }} تومان</span>
+                                        <a href="{{ item.get_absolute_url }}" class="btn btn-outline-primary btn-sm rounded-circle">
+                                            <i class="fas fa-arrow-left"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+
+    <!-- فوتر -->
+    <footer class="bg-white border-top pt-5 pb-3 mt-auto">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-4">
+                    <h5 class="fw-bold text-primary mb-3">فروشگاه آنلاین</h5>
+                    <p class="text-muted small">ما در این فروشگاه تلاش می‌کنیم بهترین محصولات را با مناسب‌ترین قیمت و ضمانت اصالت کالا به دست شما برسانیم.</p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="fw-bold mb-3">دسترسی سریع</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{% url 'shop:about_us' %}" class="text-decoration-none text-muted">درباره ما</a></li>
+                        <li class="mb-2"><a href="{% url 'shop:call_us' %}" class="text-decoration-none text-muted">تماس با ما</a></li>
+                        <li class="mb-2"><a href="{% url 'shop:faq' %}" class="text-decoration-none text-muted">سوالات متداول</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-12 col-md-4">
+                    <h6 class="fw-bold mb-3">ارتباط با ما</h6>
+                    <p class="text-muted small mb-2"><i class="fas fa-phone me-2"></i> ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                    <p class="text-muted small mb-3"><i class="fas fa-envelope me-2"></i> matingh892@gmail.com</p>
+                    <div class="d-flex gap-2">
+                        <a href="https://instagram.com/mg_shp" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/mag_shp" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center text-muted small mb-0">تمامی حقوق برای این فروشگاه محفوظ است.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- اسکریپت کنترل افزایش و کاهش تعداد -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const quantityInput = document.getElementById('quantity');
+            const btnIncrease = document.getElementById('btn-increase');
+            const btnDecrease = document.getElementById('btn-decrease');
+
+            // اگر محصول غیرفعال یا ناموجود باشد عناصر فوق در DOM وجود ندارند
+            if (!quantityInput || !btnIncrease || !btnDecrease) return;
+
+            const maxStock = parseInt(quantityInput.getAttribute('max')) || 99;
+            const minStock = parseInt(quantityInput.getAttribute('min')) || 1;
+
+            function updateButtonsState() {
+                let currentVal = parseInt(quantityInput.value) || minStock;
+                btnDecrease.disabled = (currentVal <= minStock);
+                btnIncrease.disabled = (currentVal >= maxStock);
+            }
+
+            btnIncrease.addEventListener('click', function() {
+                let currentVal = parseInt(quantityInput.value) || minStock;
+                if (currentVal < maxStock) {
+                    quantityInput.value = currentVal + 1;
+                    updateButtonsState();
+                }
+            });
+
+            btnDecrease.addEventListener('click', function() {
+                let currentVal = parseInt(quantityInput.value) || minStock;
+                if (currentVal > minStock) {
+                    quantityInput.value = currentVal - 1;
+                    updateButtonsState();
+                }
+            });
+
+            quantityInput.addEventListener('change', function() {
+                let currentVal = parseInt(quantityInput.value) || minStock;
+                if (currentVal < minStock) quantityInput.value = minStock;
+                if (currentVal > maxStock) quantityInput.value = maxStock;
+                updateButtonsState();
+            });
+
+            updateButtonsState();
+        });
+    </script>
+</body>
+</html>

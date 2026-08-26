@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تماس با ما | ارتباط مستقیم</title>
+
+    <!-- Bootstrap 5 RTL CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- فونت فارسی وزیرمتن -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        /* هدر شیب‌دار با آیکون شناور */
+        .contact-header {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: #fff;
+            padding: 70px 0 100px 0;
+            border-radius: 0 0 35px 35px;
+        }
+
+        /* کارت‌های ارتباطی اصلی که هدر را قطع می‌کنند */
+        .contact-cards-wrapper {
+            margin-top: -60px;
+        }
+
+        .interactive-card {
+            border: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            background: #ffffff;
+        }
+
+        .interactive-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(13, 110, 253, 0.12) !important;
+        }
+
+        .icon-wrapper {
+            width: 65px;
+            height: 65px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            font-size: 1.5rem;
+        }
+
+        /* استایل اختصاصی فرم تماس */
+        .contact-form-card {
+            border-radius: 24px;
+            border: none;
+        }
+
+        .form-control:focus, .form-select:focus {
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+            border-color: #0d6efd;
+        }
+
+        /* دکمه‌های شبکه‌های اجتماعی */
+        .social-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            text-decoration: none;
+        }
+        
+        .social-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .btn-telegram { background: #e8f3ff; color: #229ED9; }
+        .btn-instagram { background: #fde8f0; color: #E1306C; }
+        .btn-whatsapp { background: #e6f8f0; color: #25D366; }
+
+        /* آکاردئون سوالات متداول */
+        .accordion-button:not(.collapsed) {
+            background-color: #e7f1ff;
+            color: #0d6efd;
+        }
+        .accordion-button::after {
+            margin-right: auto;
+            margin-left: 0;
+        }
+    </style>
+</head>
+<body class="d-flex flex-column min-vh-100">
+
+    <!-- هدر بالای صفحه -->
+    <header class="contact-header text-center">
+        <div class="container">
+            <span class="badge bg-white text-primary px-3 py-2 rounded-pill fw-bold mb-3 shadow-sm">مشتاق شنیدن صدای گرمتان هستیم</span>
+            <h1 class="fw-extrabold display-5">چگونه می‌توانیم به شما کمک کنیم؟</h1>
+            <p class="lead opacity-75 mb-0 fs-6">تیم پشتیبانی ما در تمام ساعات کاری آماده پاسخگویی به شماست.</p>
+        </div>
+    </header>
+
+    <!-- محتوای اصلی -->
+    <main class="container mb-5 flex-grow-1">
+
+        <!-- ۱. کارت‌های سه‌گانه ارتباط سریع -->
+        <div class="row g-4 contact-cards-wrapper mb-5">
+            
+            <!-- کارت تلفن -->
+            <div class="col-md-4">
+                <div class="card interactive-card shadow-sm p-4 text-center h-100">
+                    <div class="icon-wrapper bg-primary bg-opacity-10 text-primary mb-3">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">تماس تلفنی</h5>
+                    <p class="text-muted small mb-3">شنبه تا چهارشنبه از ساعت ۹ الی ۱۸</p>
+                    <a href="tel:02112345678" class="text-decoration-none fw-bold text-dark dir-ltr d-block fs-5">028 - 1234 5678</a>
+                </div>
+            </div>
+
+            <!-- کارت شبکه‌های اجتماعی -->
+            <div class="col-md-4">
+                <div class="card interactive-card shadow-sm p-4 text-center h-100">
+                    <div class="icon-wrapper bg-danger bg-opacity-10 text-danger mb-3">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">پشتیبانی آنلاین</h5>
+                    <p class="text-muted small mb-3">پاسخگویی سریع در پیام‌رسان‌ها</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        <a href="https://t.me/mag_shp" target="_blank" class="social-btn btn-telegram" title="تلگرام">
+                            <i class="fab fa-telegram-plane"></i>
+                        </a>
+                        <a href="https://instagram.com/mg_shp" target="_blank" class="social-btn btn-instagram" title="اینستاگرام">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://wa.me/989123456789" target="_blank" class="social-btn btn-whatsapp" title="واتساپ">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- کارت آدرس حضوری -->
+            <div class="col-md-4">
+                <div class="card interactive-card shadow-sm p-4 text-center h-100">
+                    <div class="icon-wrapper bg-success bg-opacity-10 text-success mb-3">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h5 class="fw-bold mb-2">مراجعه حضوری</h5>
+                    <p class="text-muted small mb-1">تهران، خیابان آزادی، پلاک ۱۲۳</p>
+                    <span class="badge bg-light text-dark border align-self-center mt-auto px-3 py-2">کد پستی: ۱۲۳۴۵۶۷۸۹۰</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ۲. بخش فرم ارسال پیام و اطلاعات دفتر -->
+       <form action="{% url 'shop:call_us' %}" method="post">
+    {% csrf_token %}
+    
+    <!-- نمایش پیام موفقیت (در صورت وجود) -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label class="form-label small fw-bold">{{ form.fullname.label }}</label>
+            {{ form.fullname }}
+            {% if form.fullname.errors %}
+                <div class="text-danger small mt-1">{{ form.fullname.errors.0 }}</div>
+            {% endif %}
+        </div>
+        
+        <div class="col-md-6">
+            <label class="form-label small fw-bold">{{ form.subject.label }}</label>
+            {{ form.subject }}
+            {% if form.subject.errors %}
+                <div class="text-danger small mt-1">{{ form.subject.errors.0 }}</div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label small fw-bold">{{ form.email.label }}</label>
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <label class="form-label small fw-bold">{{ form.message.label }}</label>
+            {{ form.message }}
+            {% if form.message.errors %}
+                <div class="text-danger small mt-1">{{ form.message.errors.0 }}</div>
+            {% endif %}
+        </div>
+
+        <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-primary btn-lg rounded-3 w-100 fw-bold shadow-sm py-2">
+                <i class="fas fa-paper-plane me-2"></i> ارسال پیام
+            </button>
+        </div>
+    </div>
+</form>
+
+            <!-- نقشه و اطلاعات مکمل -->
+            <div class="col-lg-5">
+                <div class="card contact-form-card shadow-sm p-4 p-md-5 bg-white h-100 d-flex flex-column justify-content-between">
+                    <div>
+                        <h4 class="fw-bold mb-3">موقعیت ما روی نقشه</h4>
+                        <!-- باکس نقشه (مکان‌نما) -->
+                        <div class="rounded-4 overflow-hidden mb-4 border" style="height: 230px; background-color: #e9ecef;">
+                            <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d51833.80587282542!2d51.337777!3d35.699722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3f8e00a8ce304e05%3A0xa0b0245084920211!2sTehran%2C%20Tehran%20Province%2C%20Iran!5e0!3m2!1sen!2s!4v1680000000000!5m2!1sen!2s" 
+                                width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                            </iframe>
+                        </div>
+
+                        <div class="bg-light p-3 rounded-3 border">
+                            <div class="d-flex align-items-center mb-2">
+                                <i class="fas fa-clock text-primary me-2"></i>
+                                <span class="fw-bold small">ساعات پاسخگویی تلفنی:</span>
+                            </div>
+                            <p class="text-muted small mb-0 ms-4">همه‌روزه (به‌جز روزهای تعطیل) از ساعت ۹:۰۰ صبح تا ۱۸:۰۰ عصر</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ۳. بخش سوالات متداول (برای هوشمندی و خلاقیت بیشتر) -->
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-9">
+                <div class="text-center mb-4">
+                    <h4 class="fw-bold">پرسش‌های متداول</h4>
+                    <p class="text-muted small">شاید پاسخ سوال شما همین‌جا باشد!</p>
+                </div>
+
+                <div class="accordion shadow-sm rounded-4 overflow-hidden" id="faqAccordion">
+                    
+                    <div class="accordion-item border-0 border-bottom">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button fw-bold fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                سفارش‌ها چقدر زمان می‌برند تا ارسال شوند؟
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted small lh-lg">
+                                تمامی سفارش‌ها ظرف ۲۴ ساعت کاری پردازش شده و از طریق پست پیشتاز یا پیک اختصاصی برای شما ارسال خواهند شد.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border-0 border-bottom">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                نحوه پیگیری سفارش ثبت‌شده به چه صورت است؟
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted small lh-lg">
+                                پس از ثبت سفارش، کد رهگیری پستی از طریق پیامک برای شما ارسال می‌شود. همچنین در پنل کاربری بخش «سفارش‌های من» می‌توانید وضعیت لحظه‌ای سفارش را مشاهده کنید.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item border-0">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button collapsed fw-bold fs-6" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                آیا امکان بازگشت کالا وجود دارد؟
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body text-muted small lh-lg">
+                                بله، در صورت وجود هرگونه مغایرت یا نقص فنی، تا ۷ روز مهلت دارید کالا را طبق شرایط ضمانت بازگشت، مرجوع کنید.
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- فوتر ساده -->
+    <footer class="bg-white border-top pt-5 pb-3 mt-auto">
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-4">
+                    <h5 class="fw-bold text-primary mb-3">فروشگاه آنلاین</h5>
+                    <p class="text-muted small">ما در این فروشگاه تلاش می‌کنیم بهترین محصولات را با مناسب‌ترین قیمت و ضمانت اصالت کالا به دست شما برسانیم.</p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="fw-bold mb-3">دسترسی سریع</h6>
+                    <ul class="list-unstyled small">
+                        <li class="mb-2"><a href="{% url 'shop:about_us' %}" class="text-decoration-none text-muted">درباره ما</a></li>
+                        <li class="mb-2"><a href="{%url 'shop:call_us'%}" class="text-decoration-none text-muted">تماس با ما</a></li>
+                        <li class="mb-2"><a href="{% url 'shop:faq' %}" class="text-decoration-none text-muted">سوالات متداول</a></li>
+                    </ul>
+                </div>
+                
+                <div class="col-12 col-md-4">
+                    <h6 class="fw-bold mb-3">ارتباط با ما</h6>
+                    <p class="text-muted small mb-2"><i class="fas fa-phone me-2"></i> ۰۲۱-۱۲۳۴۵۶۷۸</p>
+                    <p class="text-muted small mb-3"><i class="fas fa-envelope me-2"></i> matingh892@gmail.com</p>
+                    <div class="d-flex gap-2">
+                        <a href=""https://instagram.com/mg_shp"" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-instagram"></i></a>
+                        <a href="https://t.me/mag_shp" class="btn btn-outline-secondary btn-sm rounded-circle"><i class="fab fa-telegram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center text-muted small mb-0">تمامی حقوق برای این فروشگاه محفوظ است.</p>
+        </div>
+    </footer>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
