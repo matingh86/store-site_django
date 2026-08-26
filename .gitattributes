@@ -1,0 +1,7 @@
+# نادیده گرفتن تمام فایل‌های HTML و CSS در آمار زبان‌ها
+*.html linguist-vendored
+*.css linguist-vendored
+
+# نادیده گرفتن یک پوشه خاص (مثلاً پوشه static یا vendor)
+static/* linguist-vendored
+vendor/* linguist-vendored
