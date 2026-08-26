@@ -109,7 +109,7 @@ class sendotp(View):
             Otp.objects.create(phone_number=phone,code=code)
             request.session["otp_phone"]=phone
             return redirect("shop:checkotp")
-        return render(request,"send_otp.html")
+        return render(request,"shop/send_otp.html")
 
 
 
@@ -172,10 +172,6 @@ def order_create(request):
                 order.coupon = cart.coupon
                 order.discount = cart.coupon.discount 
             
-            order.save()
-            if request.user.is_authenticated:
-                
-                order.username=request.user
             order.save()
             for item in cart:
                 orderitem.objects.create(order=order,price=item['price'],product=item['product'],quantity=item['quantity'])
