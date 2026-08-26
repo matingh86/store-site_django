@@ -27,14 +27,11 @@ class registerview(CreateView):
 
     success_url="/"
     def form_valid(self, form):
-        # ذخیره کاربر جدید
         response = super().form_valid(form)
         user = self.object
 
-        # ورود خودکار کاربر
         login(self.request, user)
 
-        # ارسال پیام خوش‌آمدگویی
         messages.success(
             self.request,
             f"{user.phone} عزیز، حساب کاربری شما با موفقیت ایجاد شد و وارد شدید!",
@@ -161,7 +158,7 @@ def cart_detail(request):
             "coupon_form": forms.couponform(),
         }
     )
-@login_required(login_url='shop:login')  # 👈 برای محدود کردن تابع به کاربران لاگین شده 
+@login_required(login_url='shop:login')  
 def order_create(request):
     cart=Cart(request)
     if len(cart)==0:
@@ -173,7 +170,7 @@ def order_create(request):
             order.username=request.user
             if cart.coupon: 
                 order.coupon = cart.coupon
-                order.discount = cart.coupon.discount # درصد یا مبلغ تخفیف
+                order.discount = cart.coupon.discount 
             
             order.save()
             if request.user.is_authenticated:
@@ -312,7 +309,7 @@ def update_prfile(request):
     else:
            form=forms.updateprofileForm(instance=request.user)
     return render(request, 'shop/profile.html', {'form': form})
-@require_POST  # فقط درخواست‌های POST را می‌پذیرد
+@require_POST 
 def copounview(request):
     now=timezone.now()
     form=forms.couponform(request.POST)
@@ -327,4 +324,4 @@ def copounview(request):
         except:
             request.session['coupon_id'] = None
             messages.error(request, "کد تخفیف معتبر نیست یا منقضی شده است.")
-    return redirect('shop:cart_detail')  # یا آدرس صفحه سبد خرید شما
+    return redirect('shop:cart_detail')  
